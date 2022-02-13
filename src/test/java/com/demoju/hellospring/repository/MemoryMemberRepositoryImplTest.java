@@ -7,11 +7,10 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class MemoryMemberRepositoryImplTest {
 
-    MemoryMemberRepositoryImpl repository = new MemoryMemberRepositoryImpl();
+    MemoryMemberRepository repository = new MemoryMemberRepository();
 
     @AfterEach
     public void afterEach(){

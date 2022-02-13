@@ -1,37 +1,30 @@
 package com.demoju.hellospring.service;
 
 import com.demoju.hellospring.domain.Member;
-import com.demoju.hellospring.repository.MemoryMemberRepository;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import com.demoju.hellospring.repository.MemberRepository;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
-class MemberServiceTest {
+@SpringBootTest
+@Transactional
+class MemberServiceIntegrationTest {
 
+    @Autowired
     MemberService memberService;
-    MemoryMemberRepository memberRepository;
 
-    @BeforeEach
-    public void beforeEach() {
-        memberRepository = new MemoryMemberRepository();
-        memberService = new MemberService(memberRepository);
-    }
-
-
-    @AfterEach
-    public void afterEach() {
-        memberRepository.clearStore();
-    }
-
+    @Autowired
+    MemberRepository memberRepository;
 
     @Test
     public void 회원가입() throws Exception {
         //Given
         Member member = new Member();
-        member.setName("hello");
+        member.setName("jdbc");
         //When
         Long saveId = memberService.join(member);
         //Then
@@ -52,4 +45,5 @@ class MemberServiceTest {
                 () -> memberService.join(member2));//예외가 발생해야 한다.
         assertThat(e.getMessage()).isEqualTo("중복 회원 오류");
     }
+
 }
